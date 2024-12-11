@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import CanchasService from "../service/canchas_service";
 
-function FormAgregarCancha() {
+function FormAgregarCancha({ fetchCanchas }) {
     const [nombre, setNombre] = useState("");
     const [techada, setTechada] = useState(false);
 
     const agregar = async (e) => {
         e.preventDefault();
-        console.log("Función agregar llamada"); // Esto debería imprimirse al hacer submit
         try {
             await CanchasService.agregar_cancha(nombre, techada);
             alert("Cancha agregada exitosamente");
             setNombre("");
             setTechada(false);
+            fetchCanchas();
         } catch (error) {
             console.error("Error al agregar la cancha:", error);
             alert("Error al agregar la cancha.");
