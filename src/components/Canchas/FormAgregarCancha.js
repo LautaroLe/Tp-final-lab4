@@ -16,7 +16,10 @@ function FormAgregarCancha({ fetchCanchas }) {
         e.preventDefault();
         try {
             if(nombre.length < 3)
-                throw "el nombre tiene que tener mas de 3 caracteres"
+            {
+                handleShowToast("el nombre tiene que tener mas de 3 caracteres","warning")
+                return
+             }
             await CanchasService.agregar_cancha(nombre, techada);
             handleShowToast("Cancha agregada exitosamente ","success")
             setNombre("");
