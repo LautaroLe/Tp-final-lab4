@@ -36,7 +36,7 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
                 setReservas(response.data); // Actualizar la lista con las reservas filtradas
             }
             else
-                alert("No se encontraron reservas")
+                handleShowToast("No se encontraron reservas", "warning")
         }catch (error) {
             console.error("Error al filtrar reservas:", error);
         }
@@ -90,15 +90,15 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
     }
 
   return (
-    <Container>
+    <Container className="contenedor">
       <h2 className="my-4">Lista de Reservas</h2>
 
       {/* Filtros */}
       <Form className="mb-4">
         <Row>
           <Col md={5}>
-            <Form.Group controlId="fechaFiltro">
-              <Form.Label>Filtrar por Fecha</Form.Label>
+            <Form.Group controlId="fechaFiltro" className=" controls ">
+              <Form.Label className="textf">Filtrar por Fecha</Form.Label>
               <Form.Control
                 type="date"
                 value={fechaFiltro}
@@ -107,8 +107,8 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
             </Form.Group>
           </Col>
           <Col md={5}>
-            <Form.Group controlId="canchaFiltro">
-              <Form.Label>Filtrar por ID de Cancha</Form.Label>
+            <Form.Group controlId="canchaFiltro" className=" controls ">
+              <Form.Label className="textf">Filtrar por ID de Cancha</Form.Label>
               <Form.Control
                 type="number"
                 placeholder="ID de la cancha"
@@ -117,10 +117,12 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
               />
             </Form.Group>
           </Col>
-          <Col md={2} className="d-flex align-items-end">
-            <Button variant="primary" onClick={filtrarReservas}>
-              Filtrar
-            </Button>
+          <Col md={2} className="d-flex align-items-end ">
+          <Form.Group className=" controls ">
+                <Button variant="primary" className="boton" onClick={filtrarReservas}>
+                    Filtrar
+                </Button>
+            </Form.Group>
           </Col>
         </Row>
       </Form>
@@ -134,7 +136,7 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
         </div>
     ): 
     (
-        <div className="table-responsive overflow-auto" style={{ maxHeight: "317px" }}>
+        <div className="table-responsive"  style={{ maxHeight: "350px", minWidth:"700px"}}>
             <Table striped bordered hover>
                 <thead>
                     <tr className="text-center">

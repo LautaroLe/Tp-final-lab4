@@ -73,25 +73,25 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
 
     return (
         <Container>
-            <Form onSubmit={handleSubmit}  className="mt-4 px-3 pb-3 border "  >
+            <Form onSubmit={handleSubmit}  className="mt-4 px-3 pb-3 border Form-pedido"  >
                 <div className="mt-3">
                     {reservaEnEdicion.id ?
-                    (<h4> Modificando id: {reservaEnEdicion.id}</h4>):
-                    (<h4> Generar Reserva</h4>)}
+                    ( "Modificando id:"+ <>{reservaEnEdicion.id}</>):
+                    ("Generar Reserva")}
                     
                 </div>
-                
-                <Form.Group controlId="formDia" className="mt-3">
-                    <Form.Label>Día</Form.Label>
+                <Form.Group controlId="formDia" className="mt-3 controls">
+                    <Form.Label className="textf">Día</Form.Label>
                     <Form.Control
                         type="date"
                         value={dia}
                         onChange={(e) => setDia(e.target.value)}
                     />
                 </Form.Group>
+
                 <div className="d-flex flex-row">
-                    <Form.Group controlId="formHorario" className="w-50">
-                        <Form.Label>Horario</Form.Label>
+                    <Form.Group controlId="formHorario" className=" controls ">
+                        <Form.Label className="textf">Horario</Form.Label>
                         <Form.Control
                             type="time"
                             value={horario}
@@ -99,8 +99,8 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formDuracion" className="w-50">
-                        <Form.Label> Horas</Form.Label>
+                    <Form.Group controlId="formDuracion" className="controls ">
+                        <Form.Label className="textf"> Horas</Form.Label>
                         <Form.Control
                             className="ms-2" 
                             type="number"
@@ -110,8 +110,8 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
                     </Form.Group>
                 </div>
 
-                <Form.Group controlId="formNombre" className="mt-3">
-                    <Form.Label>Nombre</Form.Label>
+                <Form.Group controlId="formNombre" className="controls" >
+                    <Form.Label className="textf">Nombre</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Ingrese su Nombre"
@@ -120,8 +120,8 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
                     />
                 </Form.Group>
 
-                <Form.Group controlId="formTelefono" className="mt-3">
-                    <Form.Label>Telefono</Form.Label>
+                <Form.Group controlId="formTelefono" className="controls" >
+                    <Form.Label className="textf">Telefono</Form.Label>
                     <Form.Control
                         type="number"
                         placeholder="Ingrese el numero de telefono"
@@ -130,8 +130,8 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
                     />
                 </Form.Group>
 
-                <Form.Group controlId="formCanchaId" className="mt-3">
-                    <Form.Label>ID de la Cancha</Form.Label>
+                <Form.Group controlId="formCanchaId" className="controls" >
+                    <Form.Label className="textf">ID de la Cancha</Form.Label>
                     <Form.Control
                         type="number"
                         placeholder="Ingrese el ID de la cancha"
@@ -140,10 +140,10 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" className="mt-2" >
-                    {reservaEnEdicion.id ? (<n>Editar Reserva</n>) : (<n>Agregar Reserva</n>)}
+                <Button variant="primary" type="submit" className="mt-2 me-3 boton" >
+                    {reservaEnEdicion.id ? ("Editar Reserva") : ("Agregar Reserva")}
                 </Button>
-                <Button variant="primary" type="reset" onClick={() =>TerminarDeEditar()} className="mt-2 ms-3">
+                <Button variant="primary" type="reset" onClick={() =>TerminarDeEditar()} className="mt-2 ms-3 boton" >
                     <span class="reload">&#x21bb;</span>
                 </Button>
             </Form>

@@ -6,9 +6,9 @@ import ReservasService from "../../service/reservas_service";
 
 
 function ReservasPage() {
-    const [reservas, setReservas] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [reservaEnEdicion, setReservaEnEdicion] = useState({});
+    const [reservas, setReservas] = useState([]); // Estado para almacenar las reservas
+    const [Loading, setLoading] = useState(true);
+    const [reservaEnEdicion, setreservaEnEdicion] = useState({});
 
     const fetchReservas = async () => {
         setLoading(true);
@@ -29,21 +29,21 @@ function ReservasPage() {
     return (
         <Container fluid className="mt-4">
             <Row>
-                <Col md={8} className="ms-5" >
-                    <TabReservas
-                        reservas={reservas}
-                        fetchReservas={fetchReservas}
+                <Col md={8} className="ms-2" >
+                    <TabReservas 
+                        reservas={reservas} 
+                        fetchReservas={fetchReservas} 
                         setReservas={setReservas}
-                        loading={loading}
+                        loading={Loading} 
                         setLoading = {setLoading}
-                        setReservaEnEdicion={setReservaEnEdicion}
+                        setreservaEnEdicion = {setreservaEnEdicion}
                     />
                 </Col>
                 <Col md={3} className="">
-                    <FormAgregarReserva
+                    <FormAgregarReserva 
                         fetchReservas={fetchReservas}
                         reservaEnEdicion={reservaEnEdicion}
-                        setReservaEnEdicion={setReservaEnEdicion}
+                        setreservaEnEdicion = {setreservaEnEdicion}
                     />
                 </Col>
             </Row>

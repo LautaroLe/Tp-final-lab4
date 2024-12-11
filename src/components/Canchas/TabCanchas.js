@@ -48,8 +48,8 @@ function TabCanchas({ canchas, fetchCanchas, loading }) {
                 <p>Cargando canchas...</p>
             </div>
       ) : (
-        <div className="table-responsive overflow-auto" style={{ maxHeight: "317px" }}>
-            <Table striped bordered hover >
+        <div className="table-responsive " style={{ maxHeight: "317px"}}>
+            <Table striped bordered hover className="controls" >
                 <thead>
                     <tr>
                         <th>ID</th>

@@ -6,7 +6,7 @@ import TabReservas from "./Reservas/TabReservas";
 import FormAgregarCancha from "./Canchas/FormAgregarCancha";
 import FormAgregarReserva from "./Reservas/FormAgregarReserva";
 import CanchasService from "../service/canchas_service";
-import ReservasService from "../service/reservas_service"
+import ReservasService from "../service/reservas_service";
 
 function Main() {
     const [activeTab, setActiveTab] = useState("canchas");

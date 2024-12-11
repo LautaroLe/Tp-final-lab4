@@ -30,10 +30,10 @@ function FormAgregarCancha({ fetchCanchas }) {
 
     return (
         <Container>
-            <Form onSubmit={agregar} className="mt-5 px-3 pb-3 border" >
-                <Form.Group controlId="formNombre" className="mt-3">
-                    <Form.Label>Nombre de la Cancha</Form.Label>
-                    <Form.Control
+            <Form onSubmit={agregar} className="mt-5  px-3 pb-1 border Form-pedido" >
+                <Form.Group controlId="formNombre" className="mt-3 controls">
+                    <Form.Label className="textf" >Nombre de la Cancha</Form.Label>
+                    <Form.Control 
                         type="text"
                         placeholder="Ingrese el nombre"
                         value={nombre}
@@ -41,8 +41,8 @@ function FormAgregarCancha({ fetchCanchas }) {
                     />
                 </Form.Group>
 
-                <Form.Group controlId="formTechada" className="mt-2">
-                    <Form.Check
+                <Form.Group controlId="formTechada" className="mt-2 controls">
+                    <Form.Check className="textf"
                         type="checkbox"
                         label="¿Está techada?"
                         checked={techada}
@@ -50,7 +50,7 @@ function FormAgregarCancha({ fetchCanchas }) {
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" className="mt-2">
+                <Button variant="primary" type="submit" className="mt-2 controls boton">
                     Agregar Cancha
                 </Button>
             </Form>
