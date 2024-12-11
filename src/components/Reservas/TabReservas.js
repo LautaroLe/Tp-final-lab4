@@ -1,9 +1,9 @@
 import React, {useState } from "react";
 import { Table, Container, Form, Button, Row, Col, Spinner } from "react-bootstrap";
-import ReservasService from '../service/reservas_service'
+import ReservasService from '../../service/reservas_service'
 
-import ConfirmDialog from "./ConfirmModal"; // para dialogos de confirmacion 
-import NotificationToast from "./Notificacion" // para notificar el exito o error
+import ConfirmDialog from "../notifications/ConfirmModal"; // para dialogos de confirmacion 
+import NotificationToast from "../notifications/Notificacion" // para notificar el exito o error
 
 function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoading, setreservaEnEdicion }) {
   

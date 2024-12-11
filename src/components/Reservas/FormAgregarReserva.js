@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
-import ReservasService from "../service/reservas_service";
-import reservas_service from "../service/reservas_service";
-import NotificationToast from "./Notificacion"
+import ReservasService from "../../service/reservas_service";
+import NotificationToast from "../notifications/Notificacion"
 
 function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicion}) {
     const [dia, setDia] = useState("");
@@ -23,7 +22,7 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
 
         try {
             if (reservaEnEdicion.id) {
-                await reservas_service.modificar_reserva(reservaEnEdicion.id,dia, horario,duracion,nombre,telefono, canchaId )
+                await ReservasService.modificar_reserva(reservaEnEdicion.id,dia, horario,duracion,nombre,telefono, canchaId )
                 handleShowToast("Reserva modificada exitosamente","success")
             }
             else{
@@ -74,7 +73,7 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
 
     return (
         <Container>
-            <Form onSubmit={handleSubmit}  className="mt-4 px-3 pb-3 border"  >
+            <Form onSubmit={handleSubmit}  className="mt-4 px-3 pb-3 border "  >
                 <div className="mt-3">
                     {reservaEnEdicion.id ?
                     (<h4> Modificando id: {reservaEnEdicion.id}</h4>):
@@ -148,12 +147,12 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
                     <span class="reload">&#x21bb;</span>
                 </Button>
             </Form>
-            <NotificationToast
-            show={toast.show}
-            message={toast.message}
-            variant={toast.variant}
-            onClose={() => setToast({ ...toast, show: false })}
-            />
+        <NotificationToast
+        show={toast.show}
+        message={toast.message}
+        variant={toast.variant}
+        onClose={() => setToast({ ...toast, show: false })}
+        />
         </Container>
     );
 }

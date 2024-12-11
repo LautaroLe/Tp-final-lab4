@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Container, Row, Col } from "react-bootstrap";
 
-import TabCanchas from "./TabCanchas";
-import TabReservas from "./TabReservas";
-import FormAgregarCancha from "./FormAgregarCancha";
-import FormAgregarReserva from "./FormAgregarReserva";
+import TabCanchas from "./Canchas/TabCanchas";
+import TabReservas from "./Reservas/TabReservas";
+import FormAgregarCancha from "./Canchas/FormAgregarCancha";
+import FormAgregarReserva from "./Reservas/FormAgregarReserva";
 import CanchasService from "../service/canchas_service";
 import ReservasService from "../service/reservas_service"
 
 function Main() {
     const [activeTab, setActiveTab] = useState("canchas");
 
+    
+    
     const [canchas, setCanchas] = useState([]);
-    const [reservas, setReservas] = useState([]); // Estado para almacenar las reservas
-
     const [loadingCanchas, setLoadingCanchas] = useState(true);
-    const [loadingReservas, setLoadingReservas] = useState(true);
 
+    const [reservas, setReservas] = useState([]); // Estado para almacenar las reservas
+    const [loadingReservas, setLoadingReservas] = useState(true);
     const [reservaEnEdicion, setreservaEnEdicion] = useState({});
 
     const fetchCanchas = async () => {

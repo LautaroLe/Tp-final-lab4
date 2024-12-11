@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Container } from "react-bootstrap";
-import CanchasService from "../service/canchas_service";
-import NotificationToast from "./Notificacion"
+import CanchasService from "../../service/canchas_service";
+import NotificationToast from "../notifications/Notificacion"
 
 function FormAgregarCancha({ fetchCanchas }) {
     const [nombre, setNombre] = useState("");
@@ -25,7 +25,6 @@ function FormAgregarCancha({ fetchCanchas }) {
         } catch (error) {
             console.error("Error al agregar la cancha:", error);
             handleShowToast("Error al agregar la cancha: " + error,"danger")
-            alert(".");
         }
     };
 

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Table, Container, Spinner ,Button} from "react-bootstrap";
-import CanchasService from "../service/canchas_service";
-import ConfirmDialog from "./ConfirmModal";
-import NotificationToast from "./Notificacion"
+
+import CanchasService from "../../service/canchas_service";
+import ConfirmDialog from "../notifications/ConfirmModal";
+import NotificationToast from "../notifications/Notificacion"
 
 function TabCanchas({ canchas, fetchCanchas, loading }) {
 
