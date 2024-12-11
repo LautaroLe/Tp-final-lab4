@@ -57,7 +57,7 @@ function Reservas_page() {
     }
     return (
         <Container>
-            <h1>Axios - Ejemplo</h1>
+            <h1>Reservas</h1>
             {reservas != null && showUsers()}
         </Container>
     )

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Tabs, Tab, Container, Row, Col } from "react-bootstrap";
+
 import TabCanchas from "./TabCanchas";
 import TabReservas from "./TabReservas";
 import FormAgregarCancha from "./FormAgregarCancha";
@@ -24,7 +25,7 @@ function Main() {
             const response = await CanchasService.get_canchas();
             setCanchas(response.data);
         } catch (error) {
-            console.error("Error al obtener las canchas:", error);
+            alert("Error al obtener las canchas:", error);
             
         }finally{setLoadingCanchas(false);}
     };
@@ -46,7 +47,8 @@ function Main() {
     }, []);
     
     return (
-        <Container fluid className="p-5 border-1 ">
+        
+        <Container fluid >
             <Tabs
                 id="main-tabs"
                 activeKey={activeTab}
@@ -55,14 +57,14 @@ function Main() {
             >
                 <Tab eventKey="canchas" title="Canchas">
                     <Row>
-                        <Col xs={12} md={8} className="mx-auto">
+                        <Col xs={12} md={8} className="mx-auto ">
                             <TabCanchas 
                                 canchas={canchas} 
                                 fetchCanchas={fetchCanchas} 
                                 loading={loadingCanchas} 
                             />
                         </Col>
-                        <Col md={3}>
+                        <Col md={3}  className="me-5">
                             <FormAgregarCancha fetchCanchas={fetchCanchas} />
                         </Col>
                     </Row>
@@ -71,7 +73,7 @@ function Main() {
 
                 <Tab eventKey="reservas" title="Reservas">
                     <Row>
-                        <Col md={9}>
+                        <Col md={8} className="ms-4">
                             <TabReservas 
                             reservas={reservas} 
                             fetchReservas={fetchReservas} 
@@ -81,7 +83,7 @@ function Main() {
                             setreservaEnEdicion = {setreservaEnEdicion}
                             />
                         </Col>
-                        <Col md={3}>
+                        <Col md={3} className="ms-4" >
                             <FormAgregarReserva 
                                 fetchReservas={fetchReservas}
                                 reservaEnEdicion={reservaEnEdicion}

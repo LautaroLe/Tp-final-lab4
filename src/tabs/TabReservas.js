@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Table, Container, Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import ReservasService from '../service/reservas_service'
-
+import ConfirmDialog from "./ConfirmModal";
 function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoading, setreservaEnEdicion }) {
   
-  const [fechaFiltro, setFechaFiltro] = useState(""); // Filtro por fecha (YYYY-MM-DD)
-  const [canchaFiltro, setCanchaFiltro] = useState(""); // Filtro por ID de la cancha
+    const [fechaFiltro, setFechaFiltro] = useState(""); // Filtro por fecha (YYYY-MM-DD)
+    const [canchaFiltro, setCanchaFiltro] = useState(""); // Filtro por ID de la cancha
 
-  // Función para obtener todas las reservas
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [reservaIdToDelete, setReservaIdToDelete] = useState(null);
+  
   
 
   // Función para filtrar reservas por fecha y/o cancha
@@ -38,14 +40,29 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
         }
     };
 
-    const handleEliminarReserva = async (id) => {
+   
+    const handleShowConfirm = (id) => {
+        setShowConfirm(true);
+        setReservaIdToDelete(id);
+    };
+    const handleCancelDelete = () => {
+        setShowConfirm(false);
+        setReservaIdToDelete(null);
+    };
+
+    const handleEliminarReserva = async () => {
         try {
-            await ReservasService.delete_reserva(id);
-            alert("Se eliminó la reserva correctamente");
+            await ReservasService.delete_reserva(reservaIdToDelete);
+            <div class="alert alert-success" role="alert">
+                <p>Se elimino correctamente la reserva</p>
+            </div>
             fetchReservas(); // Actualizar la lista después de eliminar
         } catch (error) {
             console.error("Error al borrar la reserva:", error);
             alert("Ocurrió un error al intentar eliminar la reserva");
+        }finally {
+            setShowConfirm(false);
+            setReservaIdToDelete(null);
         }
     };
 
@@ -150,7 +167,7 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
 
                                     <Button
                                         variant="danger"
-                                        onClick={() => handleEliminarReserva(reserva.id)} // Pasamos el ID
+                                        onClick={() => handleShowConfirm(reserva.id)} // Pasamos el ID
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -172,6 +189,12 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
             </Table>
         </div>
     )}
+    <ConfirmDialog
+        show={showConfirm}
+        Confirmation={handleEliminarReserva} // Confirmar y eliminar
+        Cancelation={handleCancelDelete} // Cancelar la eliminación
+        message="¿Estás seguro de que deseas eliminar esta reserva? Esta acción no se puede deshacer."
+    />
     </Container>
   );
 }

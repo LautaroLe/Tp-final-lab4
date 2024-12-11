@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Table, Container, Spinner ,Button} from "react-bootstrap";
 import CanchasService from "../service/canchas_service";
+import ConfirmDialog from "./ConfirmModal";
+
 
 function TabCanchas({ canchas, fetchCanchas, loading }) {
 
-  const handleEliminarCancha = async (id) => {
-    try {
-      await CanchasService.eliminar_cancha(id);
-      alert("Se eliminó la cancha correctamente");
-      fetchCanchas(); // Actualizar la lista después de eliminar
-    } catch (error) {
-      console.error("Error al borrar la cancha:", error);
-      alert("Ocurrió un error al intentar eliminar la cancha");
-    }
-};
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [canchaIdToDelete, setcanchaIdToDelete] = useState(null);
+
+    const handleEliminarCancha = async (id) => {
+        try {
+        await CanchasService.eliminar_cancha(id);
+        alert("Se eliminó la cancha correctamente");
+        fetchCanchas(); // Actualizar la lista después de eliminar
+        } catch (error) {
+        console.error("Error al borrar la cancha:", error);
+        alert("Ocurrió un error al intentar eliminar la cancha");
+        }
+    };
+    const handleShowConfirm = (id) => {
+        setShowConfirm(true);
+        setcanchaIdToDelete(id);
+    };
+    const handleCancelDelete = () => {
+        setShowConfirm(false);
+        setcanchaIdToDelete(null);
+    };
 
   return (
     <Container>
@@ -44,7 +57,7 @@ function TabCanchas({ canchas, fetchCanchas, loading }) {
                                 <td className="text-center" >
                                     <Button
                                         variant="danger"
-                                        onClick={() => handleEliminarCancha(cancha.id)} // Pasamos el ID
+                                        onClick={() => handleShowConfirm(cancha.id)} // Pasamos el ID
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
@@ -65,6 +78,12 @@ function TabCanchas({ canchas, fetchCanchas, loading }) {
             </Table>
         </div>
       )}
+    <ConfirmDialog
+        show={showConfirm}
+        Confirmation={handleEliminarCancha} // Confirmar y eliminar
+        Cancelation={handleCancelDelete} // Cancelar la eliminación
+        message="¿Estás seguro de que deseas eliminar esta cancha? Esta acción no se puede deshacer y va a eliminar todas las reservas de la cancha"
+    />
     </Container>
   );
 }

@@ -48,6 +48,7 @@ function FormAgregarReserva({fetchReservas, reservaEnEdicion, setreservaEnEdicio
         setTelefono("")
         setCanchaId("");
     }
+    
     useEffect(() => {
         if (reservaEnEdicion) {
             setDia(reservaEnEdicion.dia);

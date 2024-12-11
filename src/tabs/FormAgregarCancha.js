@@ -21,7 +21,7 @@ function FormAgregarCancha({ fetchCanchas }) {
     };
 
     return (
-        <Form onSubmit={agregar} className="mt-5 px-3 pb-3 border">
+        <Form onSubmit={agregar} className="mt-5 px-3 pb-3 border" >
             <Form.Group controlId="formNombre" className="mt-3">
                 <Form.Label>Nombre de la Cancha</Form.Label>
                 <Form.Control

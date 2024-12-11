@@ -29,8 +29,15 @@ class ReservasService {
         if (dia) params.dia = dia;
         if (id) params.id = id;
 
-        const response = await axios.get(`${BASE_URL}/filtrar-Reserva`, { params });
-        return response;
+        try {
+            const response = await axios.get(`${BASE_URL}/filtrar-Reserva`, { params });
+            return response;
+        } catch (error) {
+
+            console.error("Error al filtrar reserva:", error.response?.data?.detail || error.message);
+            alert(`Error: ${error.response?.data?.detail || "Error desconocido"}`);
+
+        }
     }
 
     // Agregar una nueva reserva   LISTO 
@@ -44,7 +51,7 @@ class ReservasService {
 
             const response = await axios.post(`${BASE_URL}/add-Reservas`, params);
             console.log("Reserva agregada exitosamente:", response.data);
-            return response.data;
+            return response;
 
         } catch (error) {
 
@@ -64,7 +71,7 @@ class ReservasService {
         try {
 
             const response = await axios.put(`${BASE_URL}/modificar-Reserva/${id}`, params);
-            return response.data;
+            return response;
             
         } catch (error) {
 
@@ -76,10 +83,15 @@ class ReservasService {
 
     // Eliminar una reserva por ID
     async delete_reserva(id) {
+        try {
+            const response = await axios.delete(`${BASE_URL}/delete-reserva/${id}`);
+            return response;
+        } catch (error) {
 
-        const response = await axios.delete(`${BASE_URL}/delete-reserva/${id}`);
-        return response;
-        
+            console.error("Error al Eliminar reserva:", error.response?.data?.detail || error.message);
+            alert(`Error: ${error.response?.data?.detail || "Error desconocido"}`);
+
+        }
     }
 
     verificarReserva(dias, horarios, duracions, nombres, telefonos, canchaIds)
