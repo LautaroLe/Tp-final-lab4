@@ -18,7 +18,7 @@ function TabCanchas({ canchas, fetchCanchas, loading }) {
         try {
 
         await CanchasService.eliminar_cancha(canchaIdToDelete);
-        handleShowToast("Reserva eliminada con éxito", "success");
+        handleShowToast("cancha eliminada con éxito", "success");
         fetchCanchas(); // Actualizar la lista después de eliminar
 
         } catch (error) {

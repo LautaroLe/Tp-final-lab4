@@ -3,12 +3,17 @@ import { Container, Row, Col } from "react-bootstrap";
 import TabReservas from "./TabReservas";
 import FormAgregarReserva from "./FormAgregarReserva";
 import ReservasService from "../../service/reservas_service";
-
+import NotificationToast from "../notifications/Notificacion"
 
 function ReservasPage() {
     const [reservas, setReservas] = useState([]); // Estado para almacenar las reservas
     const [Loading, setLoading] = useState(true);
     const [reservaEnEdicion, setreservaEnEdicion] = useState({});
+
+    const [toast, setToast] = useState({ show: false, message: "", variant: "" });
+    const handleShowToast = (message, variant) => {
+        setToast({ show: true, message, variant });
+    };
 
     const fetchReservas = async () => {
         setLoading(true);
@@ -17,6 +22,7 @@ function ReservasPage() {
             setReservas(response.data);
         } catch (error) {
             console.error("Error al obtener reservas:", error);
+            handleShowToast("Error al obtener reservas:","danger")
         } finally {
             setLoading(false);
         }
@@ -47,6 +53,12 @@ function ReservasPage() {
                     />
                 </Col>
             </Row>
+        <NotificationToast
+        show={toast.show}
+        message={toast.message}
+        variant={toast.variant}
+        onClose={() => setToast({ ...toast, show: false })}
+        />
         </Container>
     );
 }
