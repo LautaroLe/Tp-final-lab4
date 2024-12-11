@@ -1,24 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Table, Container, Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import ReservasService from '../service/reservas_service'
-import ConfirmDialog from "./ConfirmModal";
+
+import ConfirmDialog from "./ConfirmModal"; // para dialogos de confirmacion 
+import NotificationToast from "./Notificacion" // para notificar el exito o error
+
 function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoading, setreservaEnEdicion }) {
   
     const [fechaFiltro, setFechaFiltro] = useState(""); // Filtro por fecha (YYYY-MM-DD)
     const [canchaFiltro, setCanchaFiltro] = useState(""); // Filtro por ID de la cancha
 
-    const [showConfirm, setShowConfirm] = useState(false);
-    const [reservaIdToDelete, setReservaIdToDelete] = useState(null);
+    const [showConfirm, setShowConfirm] = useState(false);   // dialogo de confirmación
+    const [reservaIdToDelete, setReservaIdToDelete] = useState(null); 
   
+    const [toast, setToast] = useState({ show: false, message: "", variant: "" }); // notificaciones
+
   
 
   // Función para filtrar reservas por fecha y/o cancha
     const filtrarReservas = async () => {
         setLoading(true);
         try {
-            // Construir los parámetros de la consulta
-            let dia = fechaFiltro; // `dia` según lo definido en el backend
-            let id = canchaFiltro; // `id` según lo definido en el backend
+
+            let dia = fechaFiltro; 
+            let id = canchaFiltro; 
             console.log(dia + " -- " + id)
             let response = null
             if(dia || id )
@@ -32,7 +37,7 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
             }
             else
                 alert("No se encontraron reservas")
-        } catch (error) {
+        }catch (error) {
             console.error("Error al filtrar reservas:", error);
         }
         finally{
@@ -49,17 +54,21 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
         setShowConfirm(false);
         setReservaIdToDelete(null);
     };
+    const handleShowToast = (message, variant) => {
+        setToast({ show: true, message, variant });
+    };
+
 
     const handleEliminarReserva = async () => {
         try {
+
             await ReservasService.delete_reserva(reservaIdToDelete);
-            <div class="alert alert-success" role="alert">
-                <p>Se elimino correctamente la reserva</p>
-            </div>
+            handleShowToast("Reserva eliminada con éxito", "success");
             fetchReservas(); // Actualizar la lista después de eliminar
+
         } catch (error) {
             console.error("Error al borrar la reserva:", error);
-            alert("Ocurrió un error al intentar eliminar la reserva");
+            handleShowToast("Ocurrió un error al intentar eliminar la reserva", "danger");
         }finally {
             setShowConfirm(false);
             setReservaIdToDelete(null);
@@ -195,6 +204,14 @@ function TabReservas({ reservas = [], fetchReservas,setReservas, loading, setLoa
         Cancelation={handleCancelDelete} // Cancelar la eliminación
         message="¿Estás seguro de que deseas eliminar esta reserva? Esta acción no se puede deshacer."
     />
+    <NotificationToast
+        show={toast.show}
+        message={toast.message}
+        variant={toast.variant}
+        onClose={() => setToast({ ...toast, show: false })}
+    />
+
+
     </Container>
   );
 }

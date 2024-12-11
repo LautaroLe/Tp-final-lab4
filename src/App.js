@@ -11,7 +11,7 @@ function App() {
             <Container fluid className='p-3 bg-dark app' >
                 <Nav data-bs-theme="dark">
                 <Nav.Item>
-                    <Nav.Link href="/tabs">Tabs</Nav.Link>
+                    <Nav.Link href="/">reservas</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link href="/reservas">reservas</Nav.Link>

@@ -1,22 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Table, Container, Spinner ,Button} from "react-bootstrap";
 import CanchasService from "../service/canchas_service";
 import ConfirmDialog from "./ConfirmModal";
-
+import NotificationToast from "./Notificacion"
 
 function TabCanchas({ canchas, fetchCanchas, loading }) {
 
     const [showConfirm, setShowConfirm] = useState(false);
     const [canchaIdToDelete, setcanchaIdToDelete] = useState(null);
+    const [toast, setToast] = useState({ show: false, message: "", variant: "" });
 
-    const handleEliminarCancha = async (id) => {
+    const handleShowToast = (message, variant) => {
+        setToast({ show: true, message, variant });
+    };
+    const handleEliminarCancha = async () => {
         try {
-        await CanchasService.eliminar_cancha(id);
-        alert("Se eliminó la cancha correctamente");
+
+        await CanchasService.eliminar_cancha(canchaIdToDelete);
+        handleShowToast("Reserva eliminada con éxito", "success");
         fetchCanchas(); // Actualizar la lista después de eliminar
+
         } catch (error) {
         console.error("Error al borrar la cancha:", error);
         alert("Ocurrió un error al intentar eliminar la cancha");
+        }
+        finally{ 
+            setShowConfirm(false);
+            setcanchaIdToDelete(null);
         }
     };
     const handleShowConfirm = (id) => {
@@ -84,6 +94,13 @@ function TabCanchas({ canchas, fetchCanchas, loading }) {
         Cancelation={handleCancelDelete} // Cancelar la eliminación
         message="¿Estás seguro de que deseas eliminar esta cancha? Esta acción no se puede deshacer y va a eliminar todas las reservas de la cancha"
     />
+    <NotificationToast
+        show={toast.show}
+        message={toast.message}
+        variant={toast.variant}
+        onClose={() => setToast({ ...toast, show: false })}
+    />
+
     </Container>
   );
 }
